@@ -59,3 +59,15 @@ exclude_bb_cc_pie <- pie_crab %>% filter(!site %in% c('BB', 'CC', 'PIE'))
 
 crabs_large <- pie_crab %>% filter(site %in% c('NIB','CC', 'ZI'), size > 13)
 
+
+# ----select columns -----
+# select individual columns by name, separate them by a comma
+crabs_subset <- pie_crab %>% select(latitude, size, water_temp)
+#select a range of column using:
+crab_subset2 <- pie_crab %>% select(site:air_temp)
+view(crab_subset2)
+
+
+# select a range and an indivudual column
+crab_subset3 <- pie_crab %>% select(date:water_temp, name)
+pie_crab %>% select(name, water_temp, size)
