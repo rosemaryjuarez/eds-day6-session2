@@ -71,3 +71,47 @@ view(crab_subset2)
 # select a range and an indivudual column
 crab_subset3 <- pie_crab %>% select(date:water_temp, name)
 pie_crab %>% select(name, water_temp, size)
+
+
+#use Dyplyr::mutate() to add or update a column, while keeping all existing columns
+crabs_cm <- pie_crab %>%
+  mutate(size_cm = size / 10)
+
+# WHAT HAPPENS IF I add a mutate to add a new column containing the mean of the size column?
+
+crabs_mean <- pie_crab %>%
+  mutate(size_mean = mean(size, na.rm = TRUE))
+
+
+# try not to change the name, bad idea like down below
+crabs_awesome <-  pie_crab %>%
+  mutate(name = 'i love bolillo and concha')
+view(crabs_mean)
+View(crabs_awesome)
+
+# reminder: group_by + summarize
+#
+mean_size_by_site <- pie_crab %>%
+  group_by(site) %>%
+  summarize(mean_size = mean(size, na.rm = TRUE), sd_size = sd(size, na.rm = TRUE))
+# what about a group_by and a mutate?
+#
+group_mutate <- pie_crab %>%
+  group_by(site) %>%
+  mutate(mean_size = mean(size, na.rm = TRUE))
+
+only_mutate <- pie_crab %>%
+  mutate(mean_size = mean(size, na.rm = TRUE))
+penguins %>%
+  group_by(species, island) %>%
+  summarize(mean_body_mass = mean(body_mass_g, na.rm = TRUE))
+
+#what if i want to create a new column in pie_crab that contsisn 'giant' if the sizr is greater than 35, or 'not giant if the size is less than or equal to 35?
+#
+##use dplyer:: case_when() to write if-else statements more easily
+crab_bin <- pie_crab %>%
+  mutate(size_binned = case_when()) # did not finish
+
+sites_binned <- pie_crab %>% mutate(region = case_when(
+  site
+))
